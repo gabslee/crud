@@ -130,7 +130,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseUsuario'
-  /funcionarios:
+  /usuario/ativa/{id}:
+    get:
+      tags:
+        - usuario
+      summary: Reativa um Usuario
+      operationId: reativaUsuario
+      security:
+        - auth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUsuario'
+        '404':
+          description: usuario não encontrado
+          content:
+            application/json:
+              example: Not Found
+  /funcionario:
     get:
       tags:
         - funcionario
@@ -164,7 +190,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseFuncionario'
-  /funcionarios/{id}:
+  /funcionario/{id}:
     get:
       tags:
         - funcionario
@@ -235,7 +261,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseFuncionario'
-  /pontos:
+
+  /funcionario/ativa/{id}:
+    get:
+      tags:
+        - funcionario
+      summary: Reativa um Funcionario
+      operationId: reativaFuncionario
+      security:
+        - auth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseFuncionario'
+        '404':
+          description: funcionario não encontrado
+          content:
+            application/json:
+              example: Not Found
+  /ponto:
     get:
       tags:
         - ponto
@@ -269,7 +322,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responsePonto'
-  /pontos/{id}:
+  /ponto/{id}:
     parameters:
       - name: id
         in: path
@@ -411,6 +464,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseEmpresa'
+
+  /empresa/ativa/{id}:
+    get:
+      tags:
+        - empresa
+      summary: Reativa uma Empresa
+      operationId: reativaEmpresa
+      security:
+        - auth: [ ]
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseEmpresa'
+        '404':
+          description: empresa não encontrada
+          content:
+            application/json:
+              example: Not Found
 components:
   schemas:
     responseUsuario:

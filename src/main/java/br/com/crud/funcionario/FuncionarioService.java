@@ -42,6 +42,12 @@ public class FuncionarioService {
         funcionario.setId(id);
         return repository.save(funcionario);
     }
+    public Funcionario reativa(Long id){
+        Optional<Funcionario> obj = repository.findById(id);
+        Funcionario funcionario = repository.getReferenceById(id);
+        funcionario.status = br.com.crud.funcionario.status.ATIVO;
+        return obj.get();
+    }
 
 
     public Funcionario fromRequest(RequestPayloadFuncionario requestPayloadFuncionario){

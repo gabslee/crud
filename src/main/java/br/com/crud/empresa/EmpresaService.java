@@ -38,6 +38,12 @@ public class EmpresaService {
         return repository.save(empresa);
     }
 
+    public Empresa reativa(Long id) {
+        Optional<Empresa> obj = repository.findById(id);
+        Empresa empresa = repository.getReferenceById(id);
+        empresa.status = status.ATIVO;
+        return obj.get();
+    }
 
     public Empresa fromRequest(RequestPayloadEmpresa requestPayloadEmpresa){
         Empresa empresa = new Empresa();

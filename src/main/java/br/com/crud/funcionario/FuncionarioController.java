@@ -3,6 +3,12 @@ package br.com.crud.funcionario;
 import br.com.crud.apis.FuncionarioApi;
 import br.com.crud.components.RequestPayloadFuncionario;
 import br.com.crud.components.ResponseFuncionario;
+import br.com.crud.components.ResponseUsuario;
+import br.com.crud.funcionario.Funcionario;
+import br.com.crud.funcionario.FuncionarioMapper;
+import br.com.crud.funcionario.FuncionarioService;
+import br.com.crud.usuario.Usuario;
+import br.com.crud.usuario.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,5 +72,14 @@ public class FuncionarioController implements FuncionarioApi {
         funcionario = service.update(funcionario, funcionario.id);
         response.setData(Collections.singletonList(FuncionarioMapper.toResponse(funcionario)));
         return ResponseEntity.ok(response);
+    }
+    @Override
+    @GetMapping("/ativa/{id}")
+    @Transactional
+    public ResponseEntity<ResponseFuncionario> reativaFuncionario(@PathVariable("id") Integer id) {
+        ResponseFuncionario responseFuncionario = new ResponseFuncionario();
+        Funcionario funcionario = service.reativa(id.longValue());
+        responseFuncionario.setData(Collections.singletonList(FuncionarioMapper.toResponse(funcionario)));
+        return ResponseEntity.ok(responseFuncionario);
     }
 }

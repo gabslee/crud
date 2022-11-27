@@ -38,6 +38,13 @@ public class UsuarioService {
         return obj.get();
     }
 
+    public Usuario reativa(Long id){
+        Optional<Usuario> obj = repository.findById(id);
+        Usuario usuario = repository.getReferenceById(id);
+        usuario.status = status.ATIVO;
+        return obj.get();
+    }
+
 
     public Usuario update(Usuario usuario, Long id){
         usuario.setId(id);

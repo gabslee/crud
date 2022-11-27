@@ -69,4 +69,14 @@ public class UsuarioController implements UsuarioApi {
         responseUsuario.setData(Collections.singletonList(UsuarioMapper.toResponse(usuario)));
         return ResponseEntity.ok(responseUsuario);
     }
+
+    @Override
+    @GetMapping("/ativa/{id}")
+    @Transactional
+    public ResponseEntity<ResponseUsuario> reativaUsuario(@PathVariable("id") Integer id) {
+        ResponseUsuario responseUsuario = new ResponseUsuario();
+        Usuario usuario = service.reativa(id.longValue());
+        responseUsuario.setData(Collections.singletonList(UsuarioMapper.toResponse(usuario)));
+        return ResponseEntity.ok(responseUsuario);
+    }
 }

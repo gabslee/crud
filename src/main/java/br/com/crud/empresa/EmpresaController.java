@@ -4,8 +4,12 @@ import br.com.crud.apis.EmpresaApi;
 import br.com.crud.components.RequestPayloadEmpresa;
 import br.com.crud.components.ResponseEmpresa;
 import br.com.crud.components.ResponseEmpresa;
+import br.com.crud.components.ResponseUsuario;
 import br.com.crud.empresa.Empresa;
 import br.com.crud.empresa.EmpresaMapper;
+import br.com.crud.empresa.EmpresaService;
+import br.com.crud.usuario.Usuario;
+import br.com.crud.usuario.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,11 +69,23 @@ public class EmpresaController implements EmpresaApi {
     @Override
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ResponseEmpresa> alteraEmpresa(Integer id, RequestPayloadEmpresa requestPayloadEmpresa) {
+    public ResponseEntity<ResponseEmpresa> alteraEmpresa(@PathVariable("id")Integer id,@RequestBody RequestPayloadEmpresa requestPayloadEmpresa) {
         ResponseEmpresa response = new ResponseEmpresa();
         Empresa empresa = service.fromRequest(requestPayloadEmpresa);
         empresa = service.update(empresa, id.longValue());
         response.setData(Collections.singletonList(EmpresaMapper.toResponse(empresa)));
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    @GetMapping("/ativa/{id}")
+    @Transactional
+    public ResponseEntity<ResponseEmpresa> reativaEmpresa(@PathVariable("id") Integer id) {
+        ResponseEmpresa responseEmpresa = new ResponseEmpresa();
+        Empresa empresa = service.reativa(id.longValue());
+        responseEmpresa.setData(Collections.singletonList(EmpresaMapper.toResponse(empresa)));
+        return ResponseEntity.ok(responseEmpresa);
+    }
+
+
 }

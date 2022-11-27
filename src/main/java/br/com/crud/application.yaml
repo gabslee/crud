@@ -1,0 +1,40 @@
+##
+## Propriedades gerais da aplicacao
+##
+spring:
+  ##  liquibase:
+  ##    change-log: classpath:db/changelog/db.changelog-master.xml
+  ##  r2dbc:
+  ##    url: r2dbc:mysql://localhost:3306/farm_crud_api?tlsVersion=TLSv1.2
+  ##    username: root
+  ##    password: root
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  security:
+    oauth2:
+      client:
+        provider:
+          cognito:
+            issuer-uri: ${SECURITY_OAUTH2_CLIENT_PROVIDER_COGNITO_ISSUER_URI}
+            authorization-uri: ${SECURITY_OAUTH2_CLIENT_PROVIDER_COGNITO_AUTHORIZATION_URI}
+            token-uri: ${SECURITY_OAUTH2_CLIENT_PROVIDER_COGNITO_TOKEN_URI}
+        registration:
+          cognito:
+            provider: cognito
+            client-id: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_COGNITO_CLIENT_ID}
+            client-secret: ${SECURITY_OAUTH2_CLIENT_REGISTRATION_COGNITO_CLIENT_SECRET}
+            authorization-grant-type: client_credentials
+      resourceserver:
+        jwt:
+          issuer-uri: ${SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI}
+  jpa:
+    show_sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+#        generate_statistics: true
+
