@@ -21,33 +21,36 @@ public class UsuarioMapper {
         resposeUsuario.setCpf(String.valueOf(usuario.getCpf()));
         resposeUsuario.setNascimento(String.valueOf(usuario.getNascimento()));
         resposeUsuario.setFoto(usuario.getFoto());
+        resposeUsuario.setStatus(String.valueOf(status.toStatus(usuario.getStatus().getStatus())));
         return resposeUsuario;
     }
 
     //método que utiliza uma lista para conversão de dados de Autor em ResponseAutor
     static List<ResponseUsuarioData> toResponse(List<Usuario> usuarios){
-        List<ResponseUsuarioData> responseUsuarioData = new ArrayList<>();
-        usuarios.forEach(usuario -> responseUsuarioData.add(toResponse(usuario)));
-        return responseUsuarioData;
+        List<ResponseUsuarioData> responseUsuario = new ArrayList<>();
+        usuarios.forEach(usuario -> responseUsuario.add(toResponse(usuario)));
+        return responseUsuario;
     }
 
     //método que converte dado responseUsuarioData em um dado Usuario no modelo pré-definido no contrato
-    static Usuario toModel(ResponseUsuarioData responseUsuarioData){
+    static Usuario toModel(ResponseUsuarioData responseUsuario){
         Usuario usuario = new Usuario();
-        usuario.setId(Long.valueOf(responseUsuarioData.getIdUsuario()));
-        usuario.setNome(responseUsuarioData.getNome());
-        usuario.setEmail(responseUsuarioData.getEmail());
-        usuario.setCpf(Long.valueOf(responseUsuarioData.getCpf()));
-        usuario.setNascimento(LocalDate.parse(responseUsuarioData.getNascimento()));
-        usuario.setFoto(responseUsuarioData.getFoto());
+        usuario.setId(Long.valueOf(responseUsuario.getIdUsuario()));
+        usuario.setNome(responseUsuario.getNome());
+        usuario.setEmail(responseUsuario.getEmail());
+        usuario.setCpf(responseUsuario.getCpf());
+        usuario.setNascimento(LocalDate.parse(responseUsuario.getNascimento()));
+        usuario.setFoto(responseUsuario.getFoto());
+        usuario.setStatus(status.toStatus(Integer.parseInt(responseUsuario.getStatus())));
+
         return usuario;
     }
 
     //método que utiliza uma lista para conversão de dados ResponseAutor em Usuario
-    static List<Usuario> toModel(List<ResponseUsuarioData> responseUsuarioDatas){
+    static List<Usuario> toModel(List<ResponseUsuarioData> responseUsuarios){
         List<Usuario> usuarios = new ArrayList<>();
-        responseUsuarioDatas.forEach(responseUsuarioData -> {
-            usuarios.add(toModel(responseUsuarioData));
+        responseUsuarios.forEach(responseUsuario -> {
+            usuarios.add(toModel(responseUsuario));
         });
         return usuarios;
     }

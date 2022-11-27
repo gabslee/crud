@@ -1,9 +1,8 @@
-package br.com.crud.usuario;
+package br.com.crud.empresa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
-
+public interface EmpresaRepository extends JpaRepository<Empresa,Long> {
 }

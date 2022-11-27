@@ -2,22 +2,13 @@ package br.com.crud.usuario;
 
 import br.com.crud.apis.UsuarioApi;
 import br.com.crud.components.RequestPayloadUsuario;
+
 import br.com.crud.components.ResponseUsuario;
-import br.com.crud.components.ResponseUsuarioData;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-
+import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -31,11 +22,51 @@ public class UsuarioController implements UsuarioApi {
     @GetMapping
     @Override
     public ResponseEntity<ResponseUsuario> listaUsuario() {
-        List<ResponseUsuario> usuarioFromService = new ArrayList<>();
+        ResponseUsuario response = new ResponseUsuario();
         List<Usuario> usuarios = service.findAll();
-        usuarioFromService.get(0).setData(UsuarioMapper.toResponse(usuarios));
-        return ResponseEntity.ok(usuarioFromService.get(0));
+        response.setData(UsuarioMapper.toResponse(usuarios));
+        return ResponseEntity.ok(response);
     }
 
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseUsuario> listaUsuarioId(@PathVariable("id") Integer id) {
+        ResponseUsuario responseUsuario = new ResponseUsuario();
+        Usuario usuario = service.findById(id.longValue());
+        responseUsuario.setData(Collections.singletonList(UsuarioMapper.toResponse(usuario)));
+        return ResponseEntity.ok(responseUsuario);
+    }
 
+    @Override
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<ResponseUsuario> deleteUsuario(@PathVariable("id")Integer id) {
+        ResponseUsuario responseUsuario = new ResponseUsuario();
+        Usuario usuario = service.findById(id.longValue());
+        usuario = service.delete(usuario.id);
+        responseUsuario.setData(Collections.singletonList(UsuarioMapper.toResponse(usuario)));
+        return ResponseEntity.ok(responseUsuario);
+    }
+
+    @Override
+    @PostMapping
+    @Transactional
+    public ResponseEntity<ResponseUsuario> cadastroUsuario(@RequestBody RequestPayloadUsuario requestPayloadUsuario) {
+        ResponseUsuario responseUsuario = new ResponseUsuario();
+        Usuario usuario = service.fromRequest(requestPayloadUsuario);
+        usuario = service.create(usuario);
+        responseUsuario.setData(Collections.singletonList(UsuarioMapper.toResponse(usuario)));
+        return ResponseEntity.ok(responseUsuario);
+    }
+
+    @Override
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<ResponseUsuario> alteraUsuario(@PathVariable("id")Integer id,@RequestBody RequestPayloadUsuario requestPayloadUsuario) {
+        ResponseUsuario responseUsuario = new ResponseUsuario();
+        Usuario usuario = service.fromRequest(requestPayloadUsuario);
+        usuario = service.update(usuario,id.longValue());
+        responseUsuario.setData(Collections.singletonList(UsuarioMapper.toResponse(usuario)));
+        return ResponseEntity.ok(responseUsuario);
+    }
 }

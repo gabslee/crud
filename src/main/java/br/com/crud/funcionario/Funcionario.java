@@ -30,7 +30,14 @@ public class Funcionario {
     @JoinColumn(name = "id_usuario")
     Usuario id_usuario;
     @OneToOne
-    @JoinColumn(name = "id_empresa")
+    @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa")
     Empresa id_empresa;
 
+    public void setId_usuario(Integer idUsuario) {
+        id_usuario = getId_usuario();
+    }
+
+    public void setId_empresa(Integer idEmpresa) {
+        id_empresa = getId_empresa();
+    }
 }

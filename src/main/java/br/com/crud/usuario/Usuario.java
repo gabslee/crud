@@ -18,8 +18,11 @@ public class Usuario {
     String nome;
     String email;
     String senha;
-    Long cpf;
+    @Column(name = "cpf")
+    String cpf;
     LocalDate nascimento;
     String foto;
+    @Enumerated(EnumType.STRING)
+    status status = br.com.crud.usuario.status.ATIVO;
 
 }

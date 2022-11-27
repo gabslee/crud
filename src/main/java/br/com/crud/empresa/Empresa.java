@@ -18,6 +18,8 @@ public class Empresa {
     Long cnpj;
     String telefone;
     String email;
+    @Enumerated(EnumType.STRING)
+    status status = br.com.crud.empresa.status.ATIVO;
 
 
 }

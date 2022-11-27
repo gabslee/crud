@@ -415,6 +415,8 @@ components:
   schemas:
     responseUsuario:
       type: object
+      required:
+        - data
       properties:
         data:
           type: array
@@ -423,6 +425,8 @@ components:
             properties:
               id_usuario:
                 type: integer
+              status:
+                type: string
               nome:
                 type: string
               email:
@@ -457,8 +461,6 @@ components:
         data:
           type: object
           properties:
-            status:
-              type: string
             tipo:
               type: string
             cargo:
@@ -473,6 +475,8 @@ components:
               type: integer
     responseFuncionario:
       type: object
+      required:
+        - data
       properties:
         data:
           type: array
@@ -497,6 +501,8 @@ components:
                 type: integer
     responsePonto:
       type: object
+      required:
+        - data
       properties:
         data:
           type: array
@@ -533,6 +539,8 @@ components:
               type: integer
     responseEmpresa:
       type: object
+      required:
+        - data
       properties:
         data:
           type: array
@@ -541,6 +549,8 @@ components:
             properties:
               id_empresa:
                 type: integer
+              status:
+                type: string
               nome:
                 type: string
               cnpj:
